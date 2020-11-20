@@ -26,10 +26,3 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test photos
-    - name: merge
-        uses: mtanzi/action-automerge@v1
-        id: merge
-        with:
-          github_token: 4d49ffded5a3632356cfa736bfea9ca9c4344664
-          source: 'master'
-          target: 'release'

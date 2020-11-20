@@ -1,0 +1,37 @@
+steps:
+- name: "gcr.io/cloud-builders/docker"
+  args: ["build", "-t", "gcr.io/photonimbus-app/photonimbus", "."]
+
+- name: "gcr.io/cloud-builders/docker"
+  args: ["push", "gcr.io/photonimbus-app/photonimbus"]
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+        "-s", "photonimbus-app:us-east1:photonimbus",
+        "--", "python", "manage.py", "makemigrations", "account"]
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+        "-s", "photonimbus-app:us-east1:photonimbus",
+        "--", "python", "manage.py", "makemigrations", "photos"]
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+        "-s", "photonimbus-app:us-east1:photonimbus",
+        "--", "python", "manage.py", "sqlmigrate", "account", "0001"]
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+        "-s", "photonimbus-app:us-east1:photonimbus",
+        "--", "python", "manage.py", "sqlmigrate", "photos", "0001"]
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+         "-s", "photonimbus-app:us-east1:photonimbus",
+         "--", "python", "manage.py", "migrate", "photos"]
+
+
+- name: "gcr.io/google-appengine/exec-wrapper"
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+         "-s", "photonimbus-app:us-east1:photonimbus",
+         "--", "python", "manage.py", "migrate", "account"]

@@ -1,37 +1,37 @@
 steps:
 - name: "gcr.io/cloud-builders/docker"
-  args: ["build", "-t", "gcr.io/photonimbus-app/photonimbus", "."]
+  args: ["build", "-t", "gcr.io/photonimbus-app/photonimbus-kms", "."]
 
 - name: "gcr.io/cloud-builders/docker"
-  args: ["push", "gcr.io/photonimbus-app/photonimbus"]
+  args: ["push", "gcr.io/photonimbus-app/photonimbus-kms"]
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
         "-s", "photonimbus-app:us-east1:photonimbus-kms",
         "--", "python", "manage.py", "makemigrations", "account"]
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
         "-s", "photonimbus-app:us-east1:photonimbus-kms",
         "--", "python", "manage.py", "makemigrations", "photos"]
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
         "-s", "photonimbus-app:us-east1:photonimbus-kms",
         "--", "python", "manage.py", "sqlmigrate", "account", "0001"]
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
         "-s", "photonimbus-app:us-east1:photonimbus-kms",
         "--", "python", "manage.py", "sqlmigrate", "photos", "0001"]
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
          "-s", "photonimbus-app:us-east1:photonimbus-kms",
          "--", "python", "manage.py", "migrate", "photos"]
 
 
 - name: "gcr.io/google-appengine/exec-wrapper"
-  args: ["-i", "gcr.io/photonimbus-app/photonimbus",
+  args: ["-i", "gcr.io/photonimbus-app/photonimbus-kms",
          "-s", "photonimbus-app:us-east1:photonimbus-kms",
          "--", "python", "manage.py", "migrate", "account"]

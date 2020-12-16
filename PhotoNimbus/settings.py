@@ -111,7 +111,7 @@ if os.getenv('env', None):
             'NAME': 'postgres',
             'USER': 'postgres',
             'PASSWORD': 'password',
-            'HOST': '104.196.192.6',
+            'HOST': '/cloudsql/photonimbus-app:us-east1:photonimbus-kms',
             'PORT': '5432',
         }
     }
